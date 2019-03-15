@@ -3,49 +3,35 @@ import logo from "./logo.svg";
 import "./App.css";
 import Button from "@material-ui/core/Button";
 import {connect} from 'react-redux';
-import {startAction} from 'actions/startAction';
-import { stopAction } from "actions/stopAction";
+import {addTrade,fetchTrade} from "actions/actions";
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    // this.props.fetchTrade();
+    console.log(this.props)
+    this.props.fetchTrade();
+  }
   render() {
+    const {trades} = this.props;
+    console.log(trades)
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} 
-          className={
-            "App-logo" + 
-            (this.props.rotating ? "":" App-logo-paused")
-          } 
-          alt="logo" 
-          onClick={this.props.rotating ? this.props.stopAction : this.props.startAction} 
-          />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          <Button variant="contained" color="primary" onClick={this.props.rotating ? this.props.stopAction : this.props.startAction} >
-            Hello World
-          </Button>
-        </header>
+        {trades?trades.map((trade,idx)=>{
+          return <div key={idx}>{trade.ticker}</div>
+        }):<em>loading...</em>}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  ...state
-});
-const mapDispatchToProps = dispatch => ({
-  startAction: () => dispatch(startAction),
-  stopAction: () => dispatch(stopAction)
+  trades: state.trades
 });
 
+const mapDispatchToProps = dispatch => ({
+  fetchTrade: () => dispatch(fetchTrade()),
+  addTrade: (payload) => dispatch(addTrade(payload))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
