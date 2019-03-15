@@ -4,12 +4,10 @@ import "./App.css";
 import Button from "@material-ui/core/Button";
 import {connect} from 'react-redux';
 import {addTrade,fetchTrade} from "actions/actions";
-
+import TradeTable from "components/trade-table"
 class App extends Component {
   constructor(props){
     super(props);
-    // this.props.fetchTrade();
-    console.log(this.props)
     this.props.fetchTrade();
   }
   render() {
@@ -20,6 +18,7 @@ class App extends Component {
         {trades?trades.map((trade,idx)=>{
           return <div key={idx}>{trade.ticker}</div>
         }):<em>loading...</em>}
+        <TradeTable />
       </div>
     );
   }
