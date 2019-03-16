@@ -6,12 +6,6 @@ import {connect} from 'react-redux';
 import {addTrade,fetchTrade} from "actions/actions";
 import TradeTable from "components/trade-table"
 
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return { id: counter, name, calories, fat, carbs, protein };
-}  
-
 class App extends Component {
   constructor(props){
     super(props);
@@ -19,14 +13,11 @@ class App extends Component {
   }
   render() {
     const {trades} = this.props;
-    console.log(trades)
+    console.log('at app:',trades)
 
     return (
       <div className="App">
-        {trades?trades.map((trade,idx)=>{
-          return <div key={idx}>{trade.ticker}</div>
-        }):<em>loading...</em>}
-        <TradeTable trades={trades}  />
+        {this.props.trades?<TradeTable trades={trades} />:<em>loading...</em>}
       </div>
     );
   }
