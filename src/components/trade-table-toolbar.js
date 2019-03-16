@@ -51,7 +51,7 @@ const toolbarStyles = theme => ({
             </Typography>
           ) : (
             <Typography variant="h6" id="tableTitle">
-              Nutrition
+              My Trades
             </Typography>
           )}
         </div>

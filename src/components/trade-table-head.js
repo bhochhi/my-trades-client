@@ -8,11 +8,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const rows = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-    { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-    { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+    { id: 'trade_date', numeric: false, disablePadding: true, label: 'Trade Date' },
+    { id: 'asset_name', numeric: false, disablePadding: true, label: 'Asset Name' },
+    { id: 'trade_type', numeric: false, disablePadding: true, label: 'Trade Type' },
+    { id: 'quantity', numeric: true, disablePadding: true, label: 'Quantity' },
+    { id: 'cost_per_share', numeric: true, disablePadding: true, label: 'Cost Per Share' },
+    { id: 'total_cost', numeric: true, disablePadding: false, label: 'Total Cost' },
+    { id: 'current_price', numeric: true, disablePadding: false, label: 'Current price' },
   ];
   
 class TradeTableHead extends React.Component {

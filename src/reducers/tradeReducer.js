@@ -4,7 +4,7 @@ export default (state, action) => {
     switch (action.type) {
       case FETCH_TRADE:
         console.log('fetching trades....',state);
-        return {"trades": data};
+        return data;
       case ADD_TRADE:
          return {"trades": [...state, action.payload]}
       default:
@@ -12,13 +12,22 @@ export default (state, action) => {
     }
   };
 
-
-  const data = [{
+  
+     
+const data = {
+  order: 'asc',
+  orderBy: 'calories',
+  selected: [],
+  data: [...trades],
+  page: 0,
+  rowsPerPage: 5,
+}
+  const trades = [{
     "trade_date":"11/02/2018",
     "broker":"Vanguard",
     "investment_type":"IRA Traditional",
     "ticker":"CSCO",
-    "stock_fund_etf":"Cisco Systems",
+    "asset_name":"Cisco Systems",
     "trade_type":"SELL",
     "Quantity":"30",
     "cost_per_share":"50",
@@ -34,7 +43,7 @@ export default (state, action) => {
     "broker":"Fidelity",
     "investment_type":"Brokerage",
     "ticker":"GE",
-    "stock_fund_etf":"General Electric",
+    "asset_name":"General Electric",
     "trade_type":"BUY",
     "Quantity":"300",
     "cost_per_share":"10",
