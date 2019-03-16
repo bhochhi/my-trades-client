@@ -17,20 +17,20 @@ const rows = [
   {
     id: "asset_name",
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: "Asset Name"
   },
   {
     id: "trade_type",
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: "Trade Type"
   },
-  { id: "quantity", numeric: true, disablePadding: true, label: "Quantity" },
+  { id: "quantity", numeric: true, disablePadding: false, label: "Quantity" },
   {
     id: "cost_per_share",
     numeric: true,
-    disablePadding: true,
+    disablePadding: false,
     label: "Cost Per Share"
   },
   {
@@ -73,9 +73,9 @@ class TradeTableHead extends React.Component {
           </TableCell>
 
           {rows.map(
-            row => (
+            (row, idx) => (
               <TableCell
-                key={row.id}
+                key={idx}
                 align={row.numeric ? "right" : "left"}
                 padding={row.disablePadding ? "none" : "default"}
                 sortDirection={orderBy === row.id ? order : false}

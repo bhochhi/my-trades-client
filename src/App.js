@@ -13,8 +13,6 @@ class App extends Component {
   }
   render() {
     const {trades} = this.props;
-    console.log('at app:',trades)
-
     return (
       <div className="App">
         {this.props.trades?<TradeTable trades={trades} />:<em>loading...</em>}

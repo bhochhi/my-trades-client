@@ -11,20 +11,6 @@ import Checkbox from "@material-ui/core/Checkbox";
 import TradeTableHead from "components/trade-table-head";
 import TradeTableToolbar from "components/trade-table-toolbar";
 
-let counter = 0;
-
-function createData(name, calories, fat, carbs, protein) {
-  counter += 1;
-  return {
-    id: counter,
-    name,
-    calories,
-    fat,
-    carbs,
-    protein
-  };
-}
-
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -53,11 +39,11 @@ function getSorting(order, orderBy) {
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    wrowth: "100%",
     marginTop: theme.spacing.unit * 3
   },
   table: {
-    minWidth: 1020
+    minWrowth: 1020
   },
   tableWrapper: {
     overflowX: "auto"
@@ -70,7 +56,7 @@ class TradeTable extends React.Component {
     console.log(this.props);
     this.state = {
       order: "asc",
-      orderBy: "calories",
+      orderBy: "trade_date",
       selected: [],
       page: 0,
       rowsPerPage: 5,
@@ -95,7 +81,7 @@ class TradeTable extends React.Component {
   handleSelectAllClick = event => {
     if (event.target.checked) {
       this.setState(state => ({
-        selected: state.data.map(n => n.id)
+        selected: state.data
       }));
       return;
     }
@@ -104,13 +90,13 @@ class TradeTable extends React.Component {
     });
   };
 
-  handleClick = (event, id) => {
+  handleClick = (event, row) => {
     const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
+    const selectedIndex = selected.indexOf(row);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, row);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -139,7 +125,7 @@ class TradeTable extends React.Component {
     });
   };
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  isSelected = row => this.state.selected.indexOf(row) !== -1;
 
   render() {
     console.log("table-trade: ", this.props, this.state);
@@ -164,30 +150,30 @@ class TradeTable extends React.Component {
             <TableBody>
               {stableSort(data, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  const isSelected = this.isSelected(n.id);
+                .map((row, idx) => {
+                  const isSelected = this.isSelected(row);
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
+                      onClick={event => this.handleClick(event, row)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
-                      key={n.id}
+                      key={idx}
                       selected={isSelected}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell component="th" scope="row" padding="none">
-                        {n.trade_date}
+                      <TableCell>{row.trade_date}</TableCell>
+                      <TableCell align="left">
+                        {row.asset_name + " (" + row.ticker + ")"}
                       </TableCell>
-                      <TableCell align="right">{n.asset_name}</TableCell>
-                      <TableCell align="right">{n.trade_type}</TableCell>
-                      <TableCell align="right">{n.quantities}</TableCell>
-                      <TableCell align="right">{n.cost_per_share}</TableCell>
-                      <TableCell align="right">{n.total_cost}</TableCell>
-                      <TableCell align="right">{n.current_price}</TableCell>
+                      <TableCell align="left">{row.trade_type}</TableCell>
+                      <TableCell align="right">{row.quantity}</TableCell>
+                      <TableCell align="right">{row.cost_per_share}</TableCell>
+                      <TableCell align="right">{row.total_cost}</TableCell>
+                      <TableCell align="right">{row.current_price}</TableCell>
                     </TableRow>
                   );
                 })}
