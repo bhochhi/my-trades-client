@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { connect } from "react-redux";
-import {
-  addTrade,
-  fetchTrade
-} from "actions/actions";
+import { addTrade, fetchTrade } from "actions/actions";
 import TradeTable from "components/trade-table";
 
 class App extends Component {
@@ -17,9 +14,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.props.trades ? (
-          <TradeTable
-            trades={trades}
-          />
+          <TradeTable trades={trades} />
         ) : (
           <em>loading...</em>
         )}
@@ -28,12 +23,12 @@ class App extends Component {
   }
 }
 const mapStateToProps = state => ({
-  trades: state.trades,
+  trades: state.trades
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchTrade: () => dispatch(fetchTrade()),
-  addTrade: payload => dispatch(addTrade(payload)),
+  addTrade: payload => dispatch(addTrade(payload))
 });
 
 export default connect(

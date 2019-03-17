@@ -220,7 +220,7 @@ TradeTable.propTypes = {
 
 
 const mapStateToProps = state => ({
-  tradeDetail: state.tradeDetail
+  tradeDetail: state.tradeDetail,
 });
 
 const mapDispatchToProps = dispatch => ({
