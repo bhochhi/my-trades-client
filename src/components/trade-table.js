@@ -13,7 +13,7 @@ import TradeTableToolbar from "components/trade-table-toolbar";
 import TradeDetailPopup from "components/trade-detail-popup";
 import { connect } from "react-redux";
 import {
-  resetTradeDetail
+  toggleTradeDetailPopup
 } from "actions/actions";
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -118,7 +118,7 @@ class TradeTable extends React.Component {
   };
 
   displayDetails = (event, row) => {
-   this.props.displayTradeDetail({displayTradeDetail:row})
+   this.props.toggleTradeDetailPopup({tradeDetail:row})
   };
 
   handleChangePage = (event, page) => {
@@ -137,7 +137,7 @@ class TradeTable extends React.Component {
 
   render() {
     console.log("table-trade: ", this.props, this.state);
-    const { classes, tradeDetail, resetTradeDetail } = this.props;
+    const { classes, tradeDetail, toggleTradeDetailPopup } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -192,7 +192,7 @@ class TradeTable extends React.Component {
               )}
             </TableBody>
           </Table>
-              {!!tradeDetail && <TradeDetailPopup data={tradeDetail} resetTradeDetail={resetTradeDetail}/> }
+              {!!tradeDetail && <TradeDetailPopup data={tradeDetail} toggleTradeDetailPopup={toggleTradeDetailPopup}/> }
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
@@ -222,13 +222,12 @@ TradeTable.propTypes = {
 const mapStateToProps = state => ({
   tradeDetail: state.tradeDetail
 });
+
 const mapDispatchToProps = dispatch => ({
-  resetTradeDetail: payload => dispatch(resetTradeDetail(payload))
+  toggleTradeDetailPopup: payload => dispatch(toggleTradeDetailPopup(payload))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles)(TradeTable));
-
-// export default withStyles(styles)(TradeTable);

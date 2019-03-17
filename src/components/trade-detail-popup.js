@@ -11,24 +11,19 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 class TradeDetailPopup extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       open: !!this.props.data
     };
   }
 
   handleClose = () => {
-      console.log('closing dialog');
-    // this.setState({ open: false });
-    this.props.resetTradeDetail();
+    console.log("closing dialog");
+    this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
   };
 
-//   componentWillReceiveProps () {
-//         this.setState({ open: !!this.props.data})
-//   }
-
   render() {
-      const {data} = this.props;
+    const { data } = this.props;
     return (
       <div>
         <Dialog
@@ -38,9 +33,7 @@ class TradeDetailPopup extends React.Component {
         >
           <DialogTitle id="form-dialog-title">{data.asset_name}</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-             {data.ticker}
-            </DialogContentText>
+            <DialogContentText>{data.ticker}</DialogContentText>
 
             {<pre>{JSON.stringify(data)}</pre>}
           </DialogContent>
@@ -62,4 +55,4 @@ TradeDetailPopup.propTypes = {
   data: PropTypes.object.isRequired
 };
 
-export default  ((TradeDetailPopup));
+export default TradeDetailPopup;

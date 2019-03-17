@@ -1,8 +1,7 @@
 import {
   FETCH_TRADE,
   ADD_TRADE,
-  DISPLAY_TRADE_DETAIL,
-  RESET_TRADE_DETAIL
+  TOGGLE_TRADE_DETAIL_POPUP
 } from "actions/actions";
 
 export default (state, action) => {
@@ -12,17 +11,10 @@ export default (state, action) => {
       return { trades: data };
     case ADD_TRADE:
       return { trades: [...state, action.payload] };
-    case DISPLAY_TRADE_DETAIL:
-      console.log("displaying trade details");
+    case TOGGLE_TRADE_DETAIL_POPUP:
       return {
         ...state,
-        tradeDetail: action.payload.displayTradeDetail
-      };
-    case RESET_TRADE_DETAIL:
-      console.log("RESET_TRADE_DETAIL", RESET_TRADE_DETAIL);
-      return {
-        ...state,
-        tradeDetail: null
+        tradeDetail: action.payload.tradeDetail
       };
     default:
       return state;
