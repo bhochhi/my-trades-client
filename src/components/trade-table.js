@@ -10,7 +10,11 @@ import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
 import TradeTableHead from "components/trade-table-head";
 import TradeTableToolbar from "components/trade-table-toolbar";
-
+import TradeDetailPopup from "components/trade-detail-popup";
+import { connect } from "react-redux";
+import {
+  resetTradeDetail
+} from "actions/actions";
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -39,11 +43,11 @@ function getSorting(order, orderBy) {
 
 const styles = theme => ({
   root: {
-    wrowth: "100%",
+    width: "100%",
     marginTop: theme.spacing.unit * 3
   },
   table: {
-    minWrowth: 1020
+    minwidth: 760
   },
   tableWrapper: {
     overflowX: "auto"
@@ -53,7 +57,6 @@ const styles = theme => ({
 class TradeTable extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       order: "asc",
       orderBy: "trade_date",
@@ -111,6 +114,11 @@ class TradeTable extends React.Component {
     this.setState({
       selected: newSelected
     });
+    
+  };
+
+  displayDetails = (event, row) => {
+   this.props.displayTradeDetail({displayTradeDetail:row})
   };
 
   handleChangePage = (event, page) => {
@@ -129,7 +137,7 @@ class TradeTable extends React.Component {
 
   render() {
     console.log("table-trade: ", this.props, this.state);
-    const { classes } = this.props;
+    const { classes, tradeDetail, resetTradeDetail } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
@@ -155,7 +163,7 @@ class TradeTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, row)}
+                      onClick={event => this.displayDetails(event, row)}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
@@ -179,11 +187,12 @@ class TradeTable extends React.Component {
                 })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
-                  <TableCell colSpan={6} />
+                  <TableCell colSpan={8} />
                 </TableRow>
               )}
             </TableBody>
           </Table>
+              {!!tradeDetail && <TradeDetailPopup data={tradeDetail} resetTradeDetail={resetTradeDetail}/> }
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
@@ -206,7 +215,20 @@ class TradeTable extends React.Component {
 }
 
 TradeTable.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(TradeTable);
+
+const mapStateToProps = state => ({
+  tradeDetail: state.tradeDetail
+});
+const mapDispatchToProps = dispatch => ({
+  resetTradeDetail: payload => dispatch(resetTradeDetail(payload))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(TradeTable));
+
+// export default withStyles(styles)(TradeTable);

@@ -1,12 +1,29 @@
-import { FETCH_TRADE, ADD_TRADE } from "actions/actions";
+import {
+  FETCH_TRADE,
+  ADD_TRADE,
+  DISPLAY_TRADE_DETAIL,
+  RESET_TRADE_DETAIL
+} from "actions/actions";
 
 export default (state, action) => {
+  console.log("reducer: ",action.type, action.payload)
   switch (action.type) {
     case FETCH_TRADE:
-      console.log("fetching trades....", state);
       return { trades: data };
     case ADD_TRADE:
       return { trades: [...state, action.payload] };
+    case DISPLAY_TRADE_DETAIL:
+      console.log("displaying trade details");
+      return {
+        ...state,
+        tradeDetail: action.payload.displayTradeDetail
+      };
+    case RESET_TRADE_DETAIL:
+      console.log("RESET_TRADE_DETAIL", RESET_TRADE_DETAIL);
+      return {
+        ...state,
+        tradeDetail: null
+      };
     default:
       return state;
   }
