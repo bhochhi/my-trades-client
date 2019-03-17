@@ -35,7 +35,7 @@ class TradeDetailPopup extends React.Component {
           <DialogContent>
             <DialogContentText>{data.ticker}</DialogContentText>
 
-            {<pre>{JSON.stringify(data)}</pre>}
+            <div><pre>{JSON.stringify(data, null, 2) }</pre></div>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
