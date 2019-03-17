@@ -23,7 +23,7 @@ class TradeDetailPopup extends React.Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, toggleType } = this.props;
     return (
       <div>
         <Dialog
@@ -31,11 +31,11 @@ class TradeDetailPopup extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{data.asset_name}</DialogTitle>
+          <DialogTitle id="form-dialog-title">{toggleType=="NEW"?"NEW TRADE":data.asset_name}</DialogTitle>
           <DialogContent>
-            <DialogContentText>{data.ticker}</DialogContentText>
+            <DialogContentText>{data.ticker}: {toggleType}</DialogContentText>
 
-            <div><pre>{JSON.stringify(data, null, 2) }</pre></div>
+            <div><pre>{toggleType=="READ"?JSON.stringify(data, null, 2):"This is new form"}</pre></div>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
@@ -52,7 +52,8 @@ class TradeDetailPopup extends React.Component {
 }
 
 TradeDetailPopup.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  toggleType: PropTypes.string.isRequired
 };
 
 export default TradeDetailPopup;

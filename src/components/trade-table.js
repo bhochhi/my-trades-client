@@ -12,9 +12,7 @@ import TradeTableHead from "components/trade-table-head";
 import TradeTableToolbar from "components/trade-table-toolbar";
 import TradeDetailPopup from "components/trade-detail-popup";
 import { connect } from "react-redux";
-import {
-  toggleTradeDetailPopup
-} from "actions/actions";
+import { toggleTradeDetailPopup } from "actions/actions";
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -114,11 +112,10 @@ class TradeTable extends React.Component {
     this.setState({
       selected: newSelected
     });
-    
   };
 
   displayDetails = (event, row) => {
-   this.props.toggleTradeDetailPopup({tradeDetail:row})
+    this.props.toggleTradeDetailPopup({ tradeDetail: row , toggleType: "READ"});
   };
 
   handleChangePage = (event, page) => {
@@ -137,14 +134,14 @@ class TradeTable extends React.Component {
 
   render() {
     console.log("table-trade: ", this.props, this.state);
-    const { classes, tradeDetail, toggleTradeDetailPopup } = this.props;
+    const { classes, tradeDetail, toggleTradeDetailPopup, toggleType } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
       rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
-        <TradeTableToolbar numSelected={selected.length} />
+        <TradeTableToolbar numSelected={selected.length} toggleTradeDetailPopup={toggleTradeDetailPopup} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <TradeTableHead
@@ -192,7 +189,13 @@ class TradeTable extends React.Component {
               )}
             </TableBody>
           </Table>
-              {!!tradeDetail && <TradeDetailPopup data={tradeDetail} toggleTradeDetailPopup={toggleTradeDetailPopup}/> }
+          {!!tradeDetail && (
+            <TradeDetailPopup
+              data={tradeDetail}
+              toggleTradeDetailPopup={toggleTradeDetailPopup}
+              toggleType={toggleType}
+            />
+          )}
         </div>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
@@ -215,16 +218,16 @@ class TradeTable extends React.Component {
 }
 
 TradeTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
-
 
 const mapStateToProps = state => ({
   tradeDetail: state.tradeDetail,
+  toggleType: state.toggleType,
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleTradeDetailPopup: payload => dispatch(toggleTradeDetailPopup(payload))
+  toggleTradeDetailPopup: payload => dispatch(toggleTradeDetailPopup(payload)),
 });
 
 export default connect(

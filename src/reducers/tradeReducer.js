@@ -14,6 +14,7 @@ export default (state, action) => {
     case TOGGLE_TRADE_DETAIL_POPUP:
       return {
         ...state,
+        toggleType: action.payload.toggleType,
         tradeDetail: action.payload.tradeDetail
       };
     default:
