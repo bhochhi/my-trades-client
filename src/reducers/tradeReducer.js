@@ -44,6 +44,67 @@ const data = [
     limit_price: 45
   },
   {
+    trade_date: "11/02/2018",
+    broker: "Vanguard",
+    investment_type: "IRA Traditional",
+    ticker: "CSCO",
+    asset_name: "Cisco Systems",
+    trade_type: "SELL",
+    quantity: "30",
+    cost_per_share: "50",
+    total_cost: "1500",
+    current_price: "48",
+    total_loss_gain: "400",
+    reason_for_trade: [
+      "hold too long",
+      "highest price so far",
+      "market sentiment"
+    ],
+    buy_again: true,
+    limit_price: 45
+  },
+  {
+    trade_date: "11/02/2018",
+    broker: "Vanguard",
+    investment_type: "IRA Traditional",
+    ticker: "CSCO",
+    asset_name: "Cisco Systems",
+    trade_type: "SELL",
+    quantity: "30",
+    cost_per_share: "50",
+    total_cost: "1500",
+    current_price: "48",
+    total_loss_gain: "400",
+    reason_for_trade: [
+      "hold too long",
+      "highest price so far",
+      "market sentiment"
+    ],
+    buy_again: true,
+    limit_price: 45
+  },
+  {
+    trade_date: "11/02/2018",
+    broker: "Vanguard",
+    investment_type: "IRA Traditional",
+    ticker: "CSCO",
+    asset_name: "Cisco Systems",
+    trade_type: "SELL",
+    quantity: "30",
+    cost_per_share: "50",
+    total_cost: "1500",
+    current_price: "48",
+    total_loss_gain: "400",
+    reason_for_trade: [
+      "hold too long",
+      "highest price so far",
+      "market sentiment"
+    ],
+    buy_again: true,
+    limit_price: 45
+  },
+  
+  {
     trade_date: "11/03/2018",
     broker: "Fidelity",
     investment_type: "Brokerage",
