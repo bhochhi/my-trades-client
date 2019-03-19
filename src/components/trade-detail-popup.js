@@ -7,7 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TradeForm  from "components/trade-entry-form";
+import TradeForm from "components/trade-entry-form";
 class TradeDetailPopup extends React.Component {
   constructor(props) {
     super(props);
@@ -31,11 +31,20 @@ class TradeDetailPopup extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">{toggleType=="NEW"?"NEW TRADE":data.asset_name + " ("+data.ticker+")"}</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            {toggleType == "NEW"
+              ? "NEW TRADE"
+              : data.asset_name + " (" + data.ticker + ")"}
+          </DialogTitle>
           <DialogContent>
-            <DialogContentText>{data.ticker}: {toggleType}</DialogContentText>
-
-            <div><pre>{toggleType=="READ"?JSON.stringify(data, null, 2):<TradeForm />}</pre></div>
+            <pre>
+              {toggleType == "READ" ? (
+                JSON.stringify(data, null, 2)
+              ) : (
+                <TradeForm />
+              )}
+            </pre>
+            
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

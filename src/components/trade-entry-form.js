@@ -7,16 +7,23 @@ import Switch from "@material-ui/core/Switch";
 
 import RadioGroup from "@material-ui/core/RadioGroup";
 import { FormGroup, Radio, FormLabel, FormControl } from "@material-ui/core";
+import Divider from '@material-ui/core/Divider';
 
+import {connect} from "react-redux"
 const styles = theme => ({
   container: {
     display: "flex",
     flexWrap: "wrap"
   },
-  textField: {
+  textField_full: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: "100%"
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit
+    
   },
   dense: {
     marginTop: 19
@@ -29,6 +36,15 @@ const styles = theme => ({
   },
   group: {
     margin: `${theme.spacing.unit}px 0`
+  },
+  shared_row: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width:'100%'
+    // display: 'flex',
+    // alignItems: 'center',
+    // flexFlow: 'column wrap',
+    // alignContent: 'stretch'
   }
 });
 class _TradeEntryFrom extends React.Component {
@@ -39,40 +55,60 @@ class _TradeEntryFrom extends React.Component {
   handleChange = event => {
     this.setState({ value: event.target.value });
   };
+
+  handleQuantityChange = event => {
+    this.setState({ value: event.target.value });
+  };
+
   render() {
-    const { classes } = this.props;
+    const { classes, tradeDetail } = this.props;
     return (
       <form className={classes.container} noValidate>
         <TextField
-          id="date"
+          id="trade_date"
           label="Trade Date"
           type="date"
-          defaultValue={new Date()}
-          className={classes.textField}
+          className={classes.textField_full}
+          variant="outlined"
           InputLabelProps={{
-            shrink: true
+            shrink: true,
           }}
         />
-
+        <div className={classes.shared_row}>
         <TextField
-          id="standard-dense"
+          id="ticket"
           label="Ticker"
-          className={classNames(classes.textField, classes.dense)}
+          className={classNames(classes.dense, classes.textField)}
           margin="dense"
+          defaultValue={tradeDetail.ticker}
+          variant="outlined"
         />
+         <TextField
+          id="current_price"
+          label="Current Price"
+          className={classNames(classes.dense, classes.textField)}
+          margin="dense"
+          defaultValue={tradeDetail.current_price}
+          variant="outlined"
+          type="number"
+        />  
+        </div>
+       
 
         <TextField
-          id="standard-dense"
+          id="asset_name"
           label="Asset Name"
-          className={classNames(classes.textField, classes.dense)}
+          className={classNames(classes.textField_full, classes.dense)}
           margin="dense"
+          defaultValue={tradeDetail.ticker}
+          variant="outlined"
         />
+          <Divider variant="middle" />
         <FormControl
-          component="fieldset"
           margin="dense"
           fullWidth={true}
-          variant="outline"
-          className={classNames(classes.textField, classes.dense)}
+          variant="filled"
+          className={classNames(classes.textField_full, classes.dense)}
         >
           <FormLabel component="label">Trade Type</FormLabel>
           <RadioGroup
@@ -80,7 +116,7 @@ class _TradeEntryFrom extends React.Component {
             aria-label="Trade Type"
             name="trade_type"
             className={classNames(classes.group, classes.margin)}
-            value={this.state.value}
+            defaultValue={tradeDetail.trade_type}
             onChange={this.handleChange}
           >
             <FormControlLabel
@@ -97,9 +133,54 @@ class _TradeEntryFrom extends React.Component {
             />
           </RadioGroup>
         </FormControl>
+        <TextField
+          id="quantity"
+          label="Quantiy"
+          defaultValue={tradeDetail.quantity}
+          onChange={this.handleQuantityChange}
+          type="number"
+          className={classNames(classes.dense, classes.textField)}
+          margin="dense"
+          variant="outlined"
+        />
+        <TextField
+          id="cost_per_share"
+          label="Cost Per Share"
+          defaultValue={tradeDetail.cost_per_share}
+          onChange={(event)=>console.log(event.target.value)}
+          type="number"
+          className={classNames(classes.dense, classes.textField)}
+          margin="dense"
+          variant="outlined"
+        />
+        <Divider  />
+         <TextField
+          id="total_cost"
+          label="Total Cost"
+          defaultValue={tradeDetail.total_cost}
+          onChange={(event)=>console.log(event.target.value)}
+          type="number"
+          className={classNames(classes.dense, classes.textField)}
+          margin="dense"
+          disabled ={true}
+          variant="outlined"
+        />
       </form>
     );
   }
 }
 
-export default withStyles(styles)(_TradeEntryFrom);
+
+const mapStateToProps = state => ({
+    tradeDetail: state.tradeDetail,
+    toggleType: state.toggleType,
+  });
+  
+  const mapDispatchToProps = dispatch => ({
+    // toggleTradeDetailPopup: payload => dispatch(toggleTradeDetailPopup(payload)),
+  });
+  
+  export default connect(
+    mapStateToProps,
+    null
+  )(withStyles(styles)(_TradeEntryFrom));

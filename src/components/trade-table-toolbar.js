@@ -45,7 +45,7 @@ let TradeTableToolbar = props => {
   const { numSelected, classes, toggleTradeDetailPopup } = props;
 
   const addTrade = (event) =>{
-      toggleTradeDetailPopup({tradeDetail:{}, toggleType:"NEW"});
+      toggleTradeDetailPopup({toggleType:"NEW"});
   }
 
   return (
