@@ -13,6 +13,8 @@ import TradeTableToolbar from "components/trade-table-toolbar";
 import TradeDetailPopup from "components/trade-detail-popup";
 import { connect } from "react-redux";
 import { toggleTradeDetailPopup } from "actions/actions";
+
+
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;

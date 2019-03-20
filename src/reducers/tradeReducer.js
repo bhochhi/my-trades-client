@@ -35,7 +35,7 @@ const trade_template = {
   trade_date:undefined,
   broker: "",
   investment_type: "",
-  ticker: undefined,
+  ticker: "CSOC",
   asset_name: "",
   trade_type: "SELL",
   quantity: 0,
