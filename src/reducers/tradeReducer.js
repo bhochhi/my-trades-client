@@ -1,8 +1,9 @@
 import {
   FETCH_TRADE,
-  ADD_TRADE,
+  ADD_TRADE,UPDATE_TRADE,
   TOGGLE_TRADE_DETAIL_POPUP
 } from "actions/actions";
+import { stat } from "fs";
 
 export default (state, action) => {
   console.log("reducer: ", action.type, action.payload);
@@ -10,10 +11,23 @@ export default (state, action) => {
     case FETCH_TRADE:
       return { trades: data };
     case ADD_TRADE:
-      console.log("payload", action.payload, state.trades);
       return {
         ...state,
         trades: [...state.trades, action.payload]
+      };
+    case UPDATE_TRADE:
+      //update the row from trades
+      const updated_trades = state.trades.map(trade =>{
+          console.log('update trade',trade.id, action.payload.id)
+          if(trade.id === action.payload.id){
+              return action.payload;
+          }
+          return trade;
+      });
+
+      return {
+        ...state,
+        trades: updated_trades
       };
     case TOGGLE_TRADE_DETAIL_POPUP:
       switch (action.payload.toggleType) {
@@ -54,6 +68,7 @@ const trade_template = {
 
 const data = [
   {
+    id: 1,
     trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
@@ -74,6 +89,7 @@ const data = [
     limit_price: 45
   },
   {
+    id: 2,
     trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
@@ -94,6 +110,7 @@ const data = [
     limit_price: 45
   },
   {
+    id: 3,
     trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
@@ -115,6 +132,7 @@ const data = [
   },
 
   {
+    id: 4,
     trade_date: "2018-08-20",
     broker: "Fidelity",
     investment_type: "Brokerage",

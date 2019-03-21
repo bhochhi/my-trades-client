@@ -7,7 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { addTrade } from "actions/actions";
+import { addTrade, updateTrade } from "actions/actions";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -101,7 +101,13 @@ class TradeDetailPopup extends React.Component {
 
   handleSubmit = event => {
     console.log("ready to save new trade", this.props.addTrade);
-    this.props.addTrade(this.state);
+    if(this.props.toggleType==="READ"){
+      this.props.updateTrade(this.state)
+    }
+    else{
+      this.props.addTrade(this.state);
+
+    }
     this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
   };
 
@@ -264,7 +270,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addTrade: payload => dispatch(addTrade(payload))
+  addTrade: payload => dispatch(addTrade(payload)),
+  updateTrade: payload => dispatch(updateTrade(payload))
 });
 
 export default connect(

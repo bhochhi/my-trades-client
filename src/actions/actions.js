@@ -1,5 +1,6 @@
 export const FETCH_TRADE = "FETCH_TRADE";
 export const ADD_TRADE = "ADD_TRADE";
+export const UPDATE_TRADE = "UPDATE_TRADE";
 export const TOGGLE_TRADE_DETAIL_POPUP = "TOGGLE_TRADE_DETAIL_POPUP";
 
 /*
@@ -16,6 +17,13 @@ export function fetchTrade(payload) {
 export function addTrade(payload) {
     return {
         type: ADD_TRADE,
+        payload
+    }
+}
+
+export function updateTrade(payload) {
+    return {
+        type: UPDATE_TRADE,
         payload
     }
 }

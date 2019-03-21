@@ -62,7 +62,7 @@ class TradeTable extends React.Component {
       orderBy: "trade_date",
       selected: [],
       page: 0,
-      rowsPerPage: 5,
+      rowsPerPage: 15,
       data: this.props.trades || []
     };
   }
@@ -136,6 +136,7 @@ class TradeTable extends React.Component {
 
 
   componentWillReceiveProps(props) {
+    console.log('trade-table state change: ', props.trades)
     this.setState({
       data: props.trades
     });
@@ -207,7 +208,7 @@ class TradeTable extends React.Component {
           )}
         </div>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[15, 50, 100]}
           component="div"
           count={data.length}
           rowsPerPage={rowsPerPage}
