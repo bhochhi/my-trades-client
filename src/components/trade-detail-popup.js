@@ -58,8 +58,10 @@ class TradeDetailPopup extends React.Component {
       ...this.props.tradeDetail
     };
   }
+
   handleDateChange = event => {
-    this.setState({ value: event.target.value });
+    this.setState({ trade_date: event.target.value });
+    console.log("date changed....", this.state.trade_date);
   };
 
   handleTickerChange = event => {
@@ -105,7 +107,7 @@ class TradeDetailPopup extends React.Component {
 
   render() {
     const { toggleType, classes, tradeDetail } = this.props;
-    const  isReadOnly = toggleType === "READ"
+    const isReadOnly = toggleType === "READ";
     return (
       <div>
         <Dialog
@@ -115,8 +117,8 @@ class TradeDetailPopup extends React.Component {
         >
           <DialogTitle id="form-dialog-title">
             {isReadOnly
-              ?this.state.asset_name + " (" + this.state.ticker + ")"
-              :  "NEW TRADE"}
+              ? this.state.asset_name + " (" + this.state.ticker + ")"
+              : "NEW TRADE"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText> </DialogContentText>
@@ -126,11 +128,11 @@ class TradeDetailPopup extends React.Component {
                 label="Trade Date"
                 type="date"
                 required
+                error={!this.state.trade_date}
                 className={classes.textField_full}
                 variant="outlined"
                 InputLabelProps={{
-                  shrink: true,
-                  
+                  shrink: true
                 }}
                 value={this.state.trade_date}
                 onChange={this.handleDateChange}
@@ -141,6 +143,7 @@ class TradeDetailPopup extends React.Component {
                   id="ticket"
                   label="Ticker"
                   required
+                  error={!this.state.ticker}
                   className={classNames(classes.dense, classes.textField)}
                   margin="dense"
                   value={this.state.ticker}
@@ -163,7 +166,7 @@ class TradeDetailPopup extends React.Component {
                 id="asset_name"
                 label="Asset Name"
                 required
-                error = {this.state.asset_name != null && this.state.asset_name != undefined}
+                error={!this.state.asset_name}
                 className={classNames(classes.textField_full, classes.dense)}
                 margin="normal"
                 value={this.state.asset_name}
@@ -204,6 +207,8 @@ class TradeDetailPopup extends React.Component {
                 id="quantity"
                 label="Quantiy"
                 value={this.state.quantity}
+                required
+                error={!this.state.quantity}
                 onChange={this.handleQuantityChange}
                 type="number"
                 className={classNames(classes.dense, classes.textField)}

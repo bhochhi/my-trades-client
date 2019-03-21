@@ -134,8 +134,15 @@ class TradeTable extends React.Component {
 
   isSelected = row => this.state.selected.indexOf(row) !== -1;
 
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      data: props.trades
+    });
+  }
+
+
   render() {
-    console.log("table-trade: ", this.props, this.state);
     const { classes, tradeDetail, toggleTradeDetailPopup, toggleType } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
     const emptyRows =
@@ -226,6 +233,7 @@ TradeTable.propTypes = {
 const mapStateToProps = state => ({
   tradeDetail: state.tradeDetail,
   toggleType: state.toggleType,
+  trades: state.trades
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -10,8 +10,11 @@ export default (state, action) => {
     case FETCH_TRADE:
       return { trades: data };
     case ADD_TRADE:
-      console.log('payload',action.payload,state.trades)
-      return { trades: [...(state.trades), action.payload], tradeDetail:undefined };
+      console.log("payload", action.payload, state.trades);
+      return {
+        ...state,
+        trades: [...state.trades, action.payload]
+      };
     case TOGGLE_TRADE_DETAIL_POPUP:
       switch (action.payload.toggleType) {
         case "NEW":
@@ -33,26 +36,25 @@ export default (state, action) => {
 };
 
 const trade_template = {
-  trade_date:undefined,
-  broker: "",
+  trade_date: "2019-03-21",
+  broker: "AMERITRADE",
   investment_type: "",
-  ticker: "CSOC",
-  asset_name: "",
+  ticker: "HELLO",
+  asset_name: "Hello world",
   trade_type: "SELL",
   quantity: 0,
   cost_per_share: 0,
   total_cost: 0,
   current_price: 0,
   total_loss_gain: 0,
-  reason_for_trade: [
-  ],
+  reason_for_trade: [],
   buy_again: false,
   limit_price: 0
 };
 
 const data = [
   {
-    trade_date: "11/02/2018",
+    trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
     ticker: "CSCO",
@@ -72,7 +74,7 @@ const data = [
     limit_price: 45
   },
   {
-    trade_date: "11/02/2018",
+    trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
     ticker: "CSCO",
@@ -92,27 +94,7 @@ const data = [
     limit_price: 45
   },
   {
-    trade_date: "11/02/2018",
-    broker: "Vanguard",
-    investment_type: "IRA Traditional",
-    ticker: "CSCO",
-    asset_name: "Cisco Systems",
-    trade_type: "SELL",
-    quantity: "30",
-    cost_per_share: "50",
-    total_cost: "1500",
-    current_price: "48",
-    total_loss_gain: "400",
-    reason_for_trade: [
-      "hold too long",
-      "highest price so far",
-      "market sentiment"
-    ],
-    buy_again: true,
-    limit_price: 45
-  },
-  {
-    trade_date: "11/02/2018",
+    trade_date: "2018-09-24",
     broker: "Vanguard",
     investment_type: "IRA Traditional",
     ticker: "CSCO",
@@ -133,7 +115,7 @@ const data = [
   },
 
   {
-    trade_date: "11/03/2018",
+    trade_date: "2018-08-20",
     broker: "Fidelity",
     investment_type: "Brokerage",
     ticker: "GE",
