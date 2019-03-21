@@ -7,7 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import TradeForm from "components/trade-entry-form";
+import { addTrade } from "actions/actions";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -97,13 +97,15 @@ class TradeDetailPopup extends React.Component {
     this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
   };
 
-  handleSubmit = () => {
+  handleSubmit = event => {
+    console.log("ready to save new trade", this.props.addTrade);
+    this.props.addTrade(this.state);
     this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
   };
 
   render() {
-    const { toggleType, classes , tradeDetail} = this.props;
-
+    const { toggleType, classes, tradeDetail } = this.props;
+    const  isReadOnly = toggleType === "READ"
     return (
       <div>
         <Dialog
@@ -112,9 +114,9 @@ class TradeDetailPopup extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-            {toggleType == "NEW"
-              ? "NEW TRADE"
-              : this.state.asset_name + " (" + this.state.ticker + ")"}
+            {isReadOnly
+              ?this.state.asset_name + " (" + this.state.ticker + ")"
+              :  "NEW TRADE"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText> </DialogContentText>
@@ -123,10 +125,12 @@ class TradeDetailPopup extends React.Component {
                 id="trade_date"
                 label="Trade Date"
                 type="date"
+                required
                 className={classes.textField_full}
                 variant="outlined"
                 InputLabelProps={{
-                  shrink: true
+                  shrink: true,
+                  
                 }}
                 value={this.state.trade_date}
                 onChange={this.handleDateChange}
@@ -136,6 +140,7 @@ class TradeDetailPopup extends React.Component {
                 <TextField
                   id="ticket"
                   label="Ticker"
+                  required
                   className={classNames(classes.dense, classes.textField)}
                   margin="dense"
                   value={this.state.ticker}
@@ -157,8 +162,10 @@ class TradeDetailPopup extends React.Component {
               <TextField
                 id="asset_name"
                 label="Asset Name"
+                required
+                error = {this.state.asset_name != null && this.state.asset_name != undefined}
                 className={classNames(classes.textField_full, classes.dense)}
-                margin="dense"
+                margin="normal"
                 value={this.state.asset_name}
                 variant="outlined"
                 onChange={this.handleAssetChange}
@@ -232,7 +239,7 @@ class TradeDetailPopup extends React.Component {
               close
             </Button>
             <Button onClick={f => this.handleSubmit(f)} color="primary">
-              Save
+              {toggleType === "NEW" ? "Save" : "Update"}
             </Button>
           </DialogActions>
         </Dialog>
@@ -252,10 +259,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // addTrade: payload => dispatch(addTrade(payload)),
+  addTrade: payload => dispatch(addTrade(payload))
 });
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withStyles(styles)(TradeDetailPopup));

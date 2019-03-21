@@ -10,7 +10,8 @@ export default (state, action) => {
     case FETCH_TRADE:
       return { trades: data };
     case ADD_TRADE:
-      return { trades: [...state, action.payload] };
+      console.log('payload',action.payload,state.trades)
+      return { trades: [...(state.trades), action.payload], tradeDetail:undefined };
     case TOGGLE_TRADE_DETAIL_POPUP:
       switch (action.payload.toggleType) {
         case "NEW":
