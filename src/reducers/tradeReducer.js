@@ -3,11 +3,11 @@ import {
   ADD_TRADE,UPDATE_TRADE,
   TOGGLE_TRADE_DETAIL_POPUP
 } from "actions/actions";
-import uuidv1  from "uuid/v1";
+import uuidv4 from "uuid/v4";
 
 export default (state, action) => {
 
-  console.log("reducer: ",uuidv1());
+  console.log("reducer: ",uuidv4());
   switch (action.type) {
     case FETCH_TRADE:
       return { trades: data };
@@ -17,9 +17,7 @@ export default (state, action) => {
         trades: [...state.trades, action.payload]
       };
     case UPDATE_TRADE:
-      //update the row from trades
       const updated_trades = state.trades.map(trade =>{
-          console.log('update trade',trade.id, action.payload.id)
           if(trade.id === action.payload.id){
               return action.payload;
           }
@@ -33,11 +31,11 @@ export default (state, action) => {
     case TOGGLE_TRADE_DETAIL_POPUP:
       switch (action.payload.toggleType) {
         case "NEW":
-          const temp = {...trade_template, id: uuidv1()}
+          const temp = {...trade_template, id: uuidv4()}
           return {
             ...state,
             toggleType: action.payload.toggleType,
-            tradeDetail: trade_template
+            tradeDetail: temp
           };
         default:
           return {
@@ -52,7 +50,6 @@ export default (state, action) => {
 };
 
 const trade_template = {
-  id: uuidv1(),
   trade_date: "2019-03-21",
   broker: "AMERITRADE",
   investment_type: "",
