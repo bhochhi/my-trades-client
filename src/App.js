@@ -3,14 +3,14 @@ import "./App.css";
 import { connect } from "react-redux";
 import { fetchTrade } from "actions/actions";
 import TradeTable from "components/trade-table";
+import { fetchTrades } from "./actions/actions";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.props.fetchTrade();
   }
   componentDidMount() {
-    this.props.fetchTrade();
+    this.props.fetchTrades();
   }
   render() {
     return (
@@ -21,11 +21,9 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  fetchTrade: () => dispatch(fetchTrade())
-});
-
 export default connect(
   null,
-  mapDispatchToProps
+  {
+    fetchTrades
+  }
 )(App);

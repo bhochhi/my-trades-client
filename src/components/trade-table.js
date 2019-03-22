@@ -136,7 +136,6 @@ class TradeTable extends React.Component {
 
 
   componentWillReceiveProps(props) {
-    console.log('trade-table state change: ', props.trades)
     this.setState({
       data: props.trades
     });

@@ -95,12 +95,10 @@ class TradeDetailPopup extends React.Component {
   };
 
   handleClose = () => {
-    console.log("closing dialog");
     this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
   };
 
   handleSubmit = event => {
-    console.log("ready to save new trade", this.props.addTrade);
     if(this.props.toggleType==="READ"){
       this.props.updateTrade(this.state)
     }
