@@ -9,6 +9,9 @@ class App extends Component {
     super(props);
     this.props.fetchTrade();
   }
+  componentDidMount() {
+    this.props.fetchTrade();
+  }
   render() {
     return (
       <div className="App">

@@ -3,11 +3,11 @@ import {
   ADD_TRADE,UPDATE_TRADE,
   TOGGLE_TRADE_DETAIL_POPUP
 } from "actions/actions";
-import uuidv4 from "uuid/v4";
+import uuidv1 from "uuid/v1";
 
 export default (state, action) => {
 
-  console.log("reducer: ",uuidv4());
+  console.log("reducer: ",uuidv1());
   switch (action.type) {
     case FETCH_TRADE:
       return { trades: data };
@@ -31,7 +31,7 @@ export default (state, action) => {
     case TOGGLE_TRADE_DETAIL_POPUP:
       switch (action.payload.toggleType) {
         case "NEW":
-          const temp = {...trade_template, id: uuidv4()}
+          const temp = {...trade_template, id: uuidv1()}
           return {
             ...state,
             toggleType: action.payload.toggleType,

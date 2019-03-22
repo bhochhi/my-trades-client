@@ -21,7 +21,7 @@ import { connect } from "react-redux";
 const styles = theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
   },
   textField_full: {
     marginLeft: theme.spacing.unit,
