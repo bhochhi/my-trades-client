@@ -7,6 +7,7 @@ export const TOGGLE_TRADE_DETAIL_POPUP = "TOGGLE_TRADE_DETAIL_POPUP";
 
 export const FETCH_TRADES = "FETCH_TRADES";
 export const SET_TRADES = "SET_TRADES";
+export const SET_CURRENT_PRICES = "SET_CURRENT_PRICES";
 
 
 /*
@@ -41,13 +42,47 @@ export function setTrades(payload){
     }
 }
 
+export function setCurrentPrices(payload){
+    return {
+        type: SET_CURRENT_PRICES,
+        payload
+    }
+}
+
 
 export function fetchTrades() {
     return function(dispatch) {
-      return axios.post("http://httpbin.org/delay/4",dataMock)
+      return axios.post("http://httpbin.org/delay/2",dataMock)
        .then(({ data }) => {
-            dispatch(setTrades(JSON.parse(data.data)));
+            const trades = JSON.parse(data.data);
+            dispatch(setTrades(trades));
+            const tickers = trades.map(trade=>trade.ticker);
+            dispatch(fetchTicker([...new Set(tickers)]));
       });
+    };
+ }
+
+export function fetchTicker(tickers) {
+    const getTickers = tickers.map(ticker=>axios.get(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${ticker}&apikey=C8DVXL0WPHLAJ4SE`));
+    return function(dispatch) {
+      return axios.all(getTickers)
+       .then((responses) => {
+           const tickerData =  responses.map(res=>{
+               const data = res.data["Global Quote"];
+               if(data===undefined){
+                   console.log('unable get quote from api: ', res)
+               }
+                return {
+                   "ticker" : data["01. symbol"],
+                   "price" :data["05. price"]
+               }
+           });
+            dispatch(setCurrentPrices(tickerData));
+      })
+      .catch((errrors) => {
+          console.log('current price ticker error', errrors);
+      })
+      ;
     };
  }
 

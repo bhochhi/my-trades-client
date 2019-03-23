@@ -3,7 +3,8 @@ import {
   ADD_TRADE,
   UPDATE_TRADE,
   TOGGLE_TRADE_DETAIL_POPUP,
-  SET_TRADES
+  SET_TRADES,
+  SET_CURRENT_PRICES
 } from "actions/actions";
 import uuidv1 from "uuid/v1";
 
@@ -43,8 +44,15 @@ export default (state, action) => {
           };
       }
     case SET_TRADES:
-      console.log('reducer: ',action);
       return { trades: action.payload };
+    case SET_CURRENT_PRICES:
+      const tickers = action.payload;
+      const newStates = state.trades.map(trade => {
+        const tick = tickers.find(t => trade.ticker === t.ticker);
+        trade.current_price = tick.price;
+        return trade;
+      });
+      return {...state, trades: newStates };
     default:
       return state;
   }

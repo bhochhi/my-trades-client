@@ -61,7 +61,6 @@ class TradeDetailPopup extends React.Component {
 
   handleDateChange = event => {
     this.setState({ trade_date: event.target.value });
-    console.log("date changed....", this.state.trade_date);
   };
 
   handleTickerChange = event => {
