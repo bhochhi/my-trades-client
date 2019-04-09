@@ -49,7 +49,7 @@ export default (state, action) => {
       const tickers = action.payload;
       const newStates = state.trades.map(trade => {
         const tick = tickers.find(t => trade.ticker === t.ticker);
-        trade.current_price = tick.price;
+        trade.current_price = tick && tick.current_price;
         return trade;
       });
       return {...state, trades: newStates };

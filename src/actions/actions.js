@@ -52,10 +52,11 @@ export function setCurrentPrices(payload){
 
 export function fetchTrades() {
     return function(dispatch) {
-      return axios.post("http://httpbin.org/delay/2",dataMock)
+      return axios.get("http://localhost:9000/trades")
        .then(({ data }) => {
-            const trades = JSON.parse(data.data);
-            dispatch(setTrades(trades));
+            console.log('data====>', data)
+            const trades = data;
+            dispatch(setTrades(data));
             const tickers = trades.map(trade=>trade.ticker);
             dispatch(fetchTicker([...new Set(tickers)]));
       });
@@ -69,14 +70,15 @@ export function fetchTicker(tickers) {
        .then((responses) => {
            const tickerData =  responses.map(res=>{
                const data = res.data["Global Quote"];
-               if(data===undefined){
-                   console.log('unable get quote from api: ', res)
+               console.log('data from alphavantage',data)
+               if((!!data && Object.keys(data).length === 0) || !data["01. symbol"]){
+                   return null;
                }
                 return {
                    "ticker" : data["01. symbol"],
-                   "price" :data["05. price"]
+                   "current_price" :data["05. price"]
                }
-           });
+           }).filter(x=>x);
             dispatch(setCurrentPrices(tickerData));
       })
       .catch((errrors) => {
