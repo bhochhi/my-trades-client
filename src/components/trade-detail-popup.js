@@ -7,14 +7,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { addTrade, updateTrade } from "actions/actions";
+import { addTrade, updateTrade, addATrade} from "actions/actions";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 
 import RadioGroup from "@material-ui/core/RadioGroup";
-import { FormGroup, Radio, FormLabel, FormControl } from "@material-ui/core";
+import { Radio, FormLabel, FormControl } from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import { connect } from "react-redux";
 
@@ -102,7 +101,7 @@ class TradeDetailPopup extends React.Component {
       this.props.updateTrade(this.state)
     }
     else{
-      this.props.addTrade(this.state);
+      this.props.addATrade(this.state);
 
     }
     this.props.toggleTradeDetailPopup({ tradeDetail: undefined });
@@ -124,7 +123,7 @@ class TradeDetailPopup extends React.Component {
               : "NEW TRADE"}
           </DialogTitle>
           <DialogContent>
-            <DialogContentText> </DialogContentText>
+            <DialogContentText> &nbsp;</DialogContentText>
             <form className={classes.container} noValidate>
               <TextField
                 id="trade_date"
@@ -268,7 +267,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addTrade: payload => dispatch(addTrade(payload)),
-  updateTrade: payload => dispatch(updateTrade(payload))
+  updateTrade: payload => dispatch(updateTrade(payload)),
+  addATrade
+ 
 });
 
 export default connect(

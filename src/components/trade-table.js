@@ -12,7 +12,7 @@ import TradeTableHead from "components/trade-table-head";
 import TradeTableToolbar from "components/trade-table-toolbar";
 import TradeDetailPopup from "components/trade-detail-popup";
 import { connect } from "react-redux";
-import { toggleTradeDetailPopup } from "actions/actions";
+import { toggleTradeDetailPopup , addATrade} from "actions/actions";
 
 
 function desc(a, b, orderBy) {
@@ -238,6 +238,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleTradeDetailPopup: payload => dispatch(toggleTradeDetailPopup(payload)),
+  addATrade
 });
 
 export default connect(

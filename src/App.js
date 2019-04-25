@@ -1,13 +1,10 @@
 import React, { Component } from "react";
-import "./App.css";
+import "App.css";
 import { connect } from "react-redux";
 import TradeTable from "components/trade-table";
 import { fetchTrades } from "./actions/actions";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     this.props.fetchTrades();
   }
